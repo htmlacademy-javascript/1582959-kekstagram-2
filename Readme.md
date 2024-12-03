@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Irina Agarkova](https://up.htmlacademy.ru/javascript-individual/2/user/1582959).
-* Наставник: `Неизвестно`.
+* Наставник:  Артём Картавый.
 
 ---
 
