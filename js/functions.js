@@ -15,12 +15,13 @@ findPalindrom();
 
 
 function findNumber (string) {
-    let numbers = '';
-     string = string.toString();
-    for (let i = 0; i < string.length; i++) {
-     if (Number.isNaN(parseInt(string[i])) === false) {
+  let numbers = '';
+  string = string.toString();
+  for (let i = 0; i < string.length; i++) {
+    if (Number.isNaN(parseInt(string[i])) === false) {
       numbers += string[i];
-     }
     }
-    return numbers === '' ? NaN : Number(numbers);
   }
+  return numbers === '' ? NaN : Number(numbers);
+}
+findNumber();
