@@ -18,7 +18,7 @@ function findNumber (string) {
   let numbers = '';
   string = string.toString();
   for (let i = 0; i < string.length; i++) {
-    if (Number.isNaN(parseInt(string[i])) === false) {
+    if (Number.isNaN(parseInt(string[i]), 10) === false) {
       numbers += string[i];
     }
   }
