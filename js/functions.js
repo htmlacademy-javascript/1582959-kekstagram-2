@@ -1,15 +1,26 @@
-function getStringLength (string, maxLength) {
-return (string.length <= maxLength) ? 'true' : 'false';
+const getStringLength = (string, maxLength) =>
+  string.length <= maxLength;
+getStringLength();
+
+
+function findPalindrom (string) {
+  const normalisedString = string.toLowerCase().replaceAll(' ', '');
+  let newString = '';
+  for (let i = normalisedString.length - 1; i >= 0; i--) {
+    newString += normalisedString[i];
+  }
+  return (normalisedString === newString);
 }
+findPalindrom();
 
 
-function isPalindrom (string) {
-  string = string.toLowerCase();
-  let newString = string.replaceAll(' ', '');
-  let stringNew = '';
-  for (let i = newString.length - 1; i >= 0; i--) {
-    stringNew += newString[i];
+function findNumber (string) {
+    let numbers = '';
+     string = string.toString();
+    for (let i = 0; i < string.length; i++) {
+     if (Number.isNaN(parseInt(string[i])) === false) {
+      numbers += string[i];
+     }
+    }
+    return numbers === '' ? NaN : Number(numbers);
   }
-  return (stringNew === newString) ? true : false;
-  }
-
