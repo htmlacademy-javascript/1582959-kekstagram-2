@@ -1,5 +1,4 @@
-const getStringLength = (string, maxLength) =>
-  string.length <= maxLength;
+const getStringLength = (string, maxLength) => string.length <= maxLength;
 getStringLength();
 
 
@@ -18,10 +17,10 @@ function findNumber (string) {
   let numbers = '';
   string = string.toString();
   for (let i = 0; i < string.length; i++) {
-    if (Number.isNaN(parseInt(string[i], 10)) === false) {
+    if (!Number.isNaN(parseInt(string[i], 10))) {
       numbers += string[i];
     }
   }
-  return numbers === '' ? NaN : Number(numbers);
+  return parseInt(numbers, 10);
 }
 findNumber();
