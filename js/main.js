@@ -57,7 +57,7 @@ const generatePhotoId = createId(MIN_VALUE, MAX_PHOTO_ID);
 const generatePhotoUrl = createId(MIN_VALUE, MAX_PHOTO_ID);
 const generateAvatarId = createId(MIN_VALUE, MAX_AVATAR_ID);
 
-const createComments = () => ({
+const createComment = () => ({
   id: generateAvatarId(),
   avatar: `img/avatar-${getRandomInteger(MIN_VALUE, MAX_AVATAR_VALUE)}.svg`,
   message: MESSAGES[getRandomInteger(0, MESSAGES.length - 1)],
@@ -69,7 +69,7 @@ const createPhotoDescription = () => ({
   url: `photos/${generatePhotoUrl()}.jpg`,
   description: DESCRIPTION,
   likes: getRandomInteger(MIN_LIKES, MAX_LIKES),
-  comments: Array.from({ length: getRandomInteger(MIN_COMMENTS, MAX_COMMENTS) }, createComments)
+  comments: Array.from({ length: getRandomInteger(MIN_COMMENTS, MAX_COMMENTS) }, createComment)
 });
 
-Array.from({ length: PHOTO_DESCRIPTION_COUNT }, createPhotoDescription);
+const createPhotos = () => Array.from({ length: PHOTO_DESCRIPTION_COUNT }, createPhotoDescription);
