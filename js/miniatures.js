@@ -6,14 +6,15 @@ const templatePicture = document.querySelector('#picture').content.querySelector
 const similarPhotos = createPhotos();
 const photoFragment = document.createDocumentFragment();
 
-similarPhotos.forEach((photo) => {
+similarPhotos.forEach(({ url, description, likes, comments }) => {
   const pictureClone = templatePicture.cloneNode(true);
-  const image = pictureClone.querySelector('.picture__img');
-  image.src = photo.url;
-  image.alt = photo.description;
-  pictureClone.querySelector('.picture__likes').textContent = photo.likes;
-  pictureClone.querySelector('.picture__comments').textContent = photo.comments.length;
+  pictureClone.querySelector('.picture__img').src = url;
+  pictureClone.querySelector('.picture__img').alt = description;
+  pictureClone.querySelector('.picture__likes').textContent = likes;
+  pictureClone.querySelector('.picture__comments').textContent = comments.length;
   photoFragment.append(pictureClone);
 });
 
 picturesContainer.append(photoFragment);
+
+export { similarPhotos };

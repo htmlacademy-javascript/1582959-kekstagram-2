@@ -1,3 +1,1 @@
-import { createPhotos } from './data.js';
-createPhotos();
-import './miniatures.js';
+import { similarPhotos } from './miniatures.js';
