@@ -1,4 +1,4 @@
-import { getRandomInteger, createId } from '/js/util.js';
+import { getRandomInteger, createId } from './util.js';
 
 const MIN_VALUE = 1;
 const MAX_PHOTO_ID = 25;
