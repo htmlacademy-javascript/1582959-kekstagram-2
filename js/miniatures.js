@@ -10,9 +10,10 @@ const renderMiniatures = () => {
 
   similarPhotos.forEach(({ url, description, likes, comments, id }) => {
     const pictureClone = templatePicture.cloneNode(true);
-    pictureClone.querySelector('.picture__img').src = url;
-    pictureClone.querySelector('.picture__img').alt = description;
-    pictureClone.querySelector('.picture__img').dataset.id = id;
+    const pictureImage = pictureClone.querySelector('.picture__img');
+    pictureImage.src = url;
+    pictureImage.alt = description;
+    pictureImage.dataset.id = id;
     pictureClone.querySelector('.picture__likes').textContent = likes;
     pictureClone.querySelector('.picture__comments').textContent = comments.length;
     photoFragment.append(pictureClone);
