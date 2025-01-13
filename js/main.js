@@ -1,1 +1,3 @@
-import { similarPhotos } from './miniatures.js';
+import { createPhotos } from './data.js';
+import { renderMiniatures } from './miniatures.js';
+renderMiniatures(createPhotos());
