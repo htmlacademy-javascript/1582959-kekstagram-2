@@ -15,4 +15,6 @@ function createId(min, max) {
   };
 }
 
-export { getRandomInteger, createId };
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export { getRandomInteger, createId, isEscapeKey };
