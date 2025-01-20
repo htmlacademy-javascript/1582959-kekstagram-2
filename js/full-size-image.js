@@ -1,5 +1,4 @@
 import { isEscapeKey } from './util.js';
-import { similarPhotos } from './miniatures';
 
 const fullSizeImage = document.querySelector('.big-picture');
 const bigPictureImage = fullSizeImage.querySelector('.big-picture__img img');
@@ -38,9 +37,7 @@ const renderComments = (comments) => {
 };
 
 // Открывает большое фото
-const openBigImage = (id) => {
-  const miniatureData = similarPhotos.find((photo) => photo.id === id);
-
+const openBigImage = (miniatureData) => {
   bigPictureImage.src = miniatureData.url;
   bigPictureImage.alt = miniatureData.description;
   likesCount.textContent = miniatureData.likes;
@@ -57,13 +54,15 @@ const openBigImage = (id) => {
 };
 
 // Закрывает большое фото
-function closeBigImage () {
+function closeBigImage() {
   fullSizeImage.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
+const onCloseButtonClick = () => closeBigImage();
+
 // Клик по крестику
-closeButton.addEventListener('click', closeBigImage);
+closeButton.addEventListener('click', onCloseButtonClick);
 
 export { openBigImage };

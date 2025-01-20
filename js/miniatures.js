@@ -7,6 +7,15 @@ const templatePicture = document.querySelector('#picture').content.querySelector
 
 const similarPhotos = createPhotos();
 
+const onPictureImageClick = (evt) => {
+  evt.preventDefault();
+  const id = evt.target.dataset.id;
+  const miniatureData = similarPhotos.find((photo) => photo.id.toString() === id);
+  if (miniatureData) {
+    openBigImage(miniatureData);
+  }
+};
+
 const renderMiniatures = () => {
   const photoFragment = document.createDocumentFragment();
 
@@ -19,11 +28,11 @@ const renderMiniatures = () => {
     pictureClone.querySelector('.picture__likes').textContent = likes;
     pictureClone.querySelector('.picture__comments').textContent = comments.length;
 
-    pictureImage.addEventListener('click', () => openBigImage(id));
+    pictureImage.addEventListener('click', onPictureImageClick);
 
     photoFragment.append(pictureClone);
   });
   picturesContainer.append(photoFragment);
 };
 
-export { similarPhotos, renderMiniatures, openBigImage };
+export { renderMiniatures };

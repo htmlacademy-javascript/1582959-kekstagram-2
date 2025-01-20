@@ -1,3 +1,7 @@
+const keyboardButtons = {
+  escape: 'Escape'
+};
+
 const getRandomInteger = (min, max) => {
   const lower = Math.ceil(Math.min(min, max));
   const upper = Math.floor(Math.max(min, max));
@@ -15,6 +19,6 @@ function createId(min, max) {
   };
 }
 
-const isEscapeKey = (evt) => evt.key === 'Escape';
+const isEscapeKey = (evt) => evt.key === keyboardButtons.escape;
 
 export { getRandomInteger, createId, isEscapeKey };
