@@ -1,6 +1,8 @@
 import { createPhotos } from './data.js';
+import { openBigImage } from './full-size-image.js';
 
 const picturesContainer = document.querySelector('.pictures');
+// const picture = picturesContainer.querySelector('.picture');
 const templatePicture = document.querySelector('#picture').content.querySelector('.picture');
 
 const similarPhotos = createPhotos();
@@ -16,9 +18,12 @@ const renderMiniatures = () => {
     pictureImage.dataset.id = id;
     pictureClone.querySelector('.picture__likes').textContent = likes;
     pictureClone.querySelector('.picture__comments').textContent = comments.length;
+
+    pictureImage.addEventListener('click', () => openBigImage(id));
+
     photoFragment.append(pictureClone);
   });
   picturesContainer.append(photoFragment);
 };
 
-export { picturesContainer, similarPhotos, renderMiniatures };
+export { similarPhotos, renderMiniatures, openBigImage };
