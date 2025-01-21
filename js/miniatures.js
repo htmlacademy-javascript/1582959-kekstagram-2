@@ -2,17 +2,19 @@ import { createPhotos } from './data.js';
 import { openBigImage } from './full-size-image.js';
 
 const picturesContainer = document.querySelector('.pictures');
-// const picture = picturesContainer.querySelector('.picture');
+const picture = picturesContainer.querySelector('.picture');
 const templatePicture = document.querySelector('#picture').content.querySelector('.picture');
 
 const similarPhotos = createPhotos();
 
 const onPictureImageClick = (evt) => {
-  evt.preventDefault();
   const id = evt.target.dataset.id;
   const miniatureData = similarPhotos.find((photo) => photo.id.toString() === id);
   if (miniatureData) {
-    openBigImage(miniatureData);
+    if (evt.target.closest('.picture')) {
+      evt.preventDefault();
+      openBigImage(miniatureData);
+    }
   }
 };
 
@@ -28,7 +30,7 @@ const renderMiniatures = () => {
     pictureClone.querySelector('.picture__likes').textContent = likes;
     pictureClone.querySelector('.picture__comments').textContent = comments.length;
 
-    pictureImage.addEventListener('click', onPictureImageClick);
+    picturesContainer.addEventListener('click', onPictureImageClick);
 
     photoFragment.append(pictureClone);
   });

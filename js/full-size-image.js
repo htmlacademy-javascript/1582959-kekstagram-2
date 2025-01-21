@@ -8,14 +8,17 @@ const closeButton = fullSizeImage.querySelector('.big-picture__cancel');
 const bigPictureSocial = document.querySelector('.big-picture__social');
 const commentCount = document.querySelector('.social__comment-count');
 const commentTotalCount = commentCount.querySelector('.social__comment-total-count');
-// const commentShownCount = commentCount.querySelector('.social__comment-shown-count');
+const commentShownCount = commentCount.querySelector('.social__comment-shown-count');
 const socialComments = document.querySelector('.social__comments');
 const socialComment = socialComments.querySelector('.social__comment');
 const commentsLoader = bigPictureSocial.querySelector('.comments-loader');
 
+const onCloseButtonClick = () => closeBigImage();
+
 // Закрытие по esc
 const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
+  const keyCode = evt.keyCode;
+  if (isEscapeKey(keyCode)) {
     evt.preventDefault();
     closeBigImage();
   }
@@ -46,6 +49,7 @@ const openBigImage = (miniatureData) => {
 
   fullSizeImage.classList.remove('hidden');
   document.body.classList.add('modal-open');
+  closeButton.addEventListener('click', onCloseButtonClick);
   document.addEventListener('keydown', onDocumentKeydown);
   commentCount.classList.add('hidden');
   commentsLoader.classList.add('hidden');
@@ -55,14 +59,11 @@ const openBigImage = (miniatureData) => {
 
 // Закрывает большое фото
 function closeBigImage() {
+
   fullSizeImage.classList.add('hidden');
   document.body.classList.remove('modal-open');
+  closeButton.removeEventListener('click', onCloseButtonClick);
   document.removeEventListener('keydown', onDocumentKeydown);
 }
-
-const onCloseButtonClick = () => closeBigImage();
-
-// Клик по крестику
-closeButton.addEventListener('click', onCloseButtonClick);
 
 export { openBigImage };

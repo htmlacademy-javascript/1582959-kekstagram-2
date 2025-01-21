@@ -1,5 +1,5 @@
 const keyboardButtons = {
-  escape: 'Escape'
+  ESCAPE: 27,
 };
 
 const getRandomInteger = (min, max) => {
@@ -19,6 +19,6 @@ function createId(min, max) {
   };
 }
 
-const isEscapeKey = (evt) => evt.key === keyboardButtons.escape;
+const isEscapeKey = (keyCode) => keyCode === keyboardButtons.ESCAPE;
 
 export { getRandomInteger, createId, isEscapeKey };
