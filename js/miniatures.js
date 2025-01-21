@@ -2,7 +2,6 @@ import { createPhotos } from './data.js';
 import { openBigImage } from './full-size-image.js';
 
 const picturesContainer = document.querySelector('.pictures');
-const picture = picturesContainer.querySelector('.picture');
 const templatePicture = document.querySelector('#picture').content.querySelector('.picture');
 
 const similarPhotos = createPhotos();
