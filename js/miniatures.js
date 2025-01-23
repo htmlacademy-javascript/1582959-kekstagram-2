@@ -9,9 +9,9 @@ const similarPhotos = createPhotos();
 const onPictureImageClick = (evt) => {
   const id = evt.target.dataset.id;
   const miniatureData = similarPhotos.find((photo) => photo.id.toString() === id);
-  if (miniatureData) {
-    if (evt.target.closest('.picture')) {
-      evt.preventDefault();
+  if (evt.target.closest('.picture')) {
+    evt.preventDefault();
+    if (miniatureData) {
       openBigImage(miniatureData);
     }
   }
@@ -28,9 +28,7 @@ const renderMiniatures = () => {
     pictureImage.dataset.id = id;
     pictureClone.querySelector('.picture__likes').textContent = likes;
     pictureClone.querySelector('.picture__comments').textContent = comments.length;
-
-    picturesContainer.addEventListener('click', onPictureImageClick);
-
+    pictureImage.addEventListener('click', onPictureImageClick);
     photoFragment.append(pictureClone);
   });
   picturesContainer.append(photoFragment);
