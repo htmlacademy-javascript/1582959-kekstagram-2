@@ -5,13 +5,16 @@ const bigPictureImage = fullSizeImage.querySelector('.big-picture__img img');
 const likesCount = fullSizeImage.querySelector('.likes-count');
 const socialCaption = fullSizeImage.querySelector('.social__caption');
 const closeButton = fullSizeImage.querySelector('.big-picture__cancel');
-const bigPictureSocial = document.querySelector('.big-picture__social');
-const commentCount = document.querySelector('.social__comment-count');
-const commentTotalCount = commentCount.querySelector('.social__comment-total-count');
-// const commentShownCount = commentCount.querySelector('.social__comment-shown-count');
-const socialComments = document.querySelector('.social__comments');
+const bigPictureSocial = fullSizeImage.querySelector('.big-picture__social');
+const socialComments = bigPictureSocial.querySelector('.social__comments');
 const socialComment = socialComments.querySelector('.social__comment');
+const commentCount = bigPictureSocial.querySelector('.social__comment-count');
+const commentTotalCount = bigPictureSocial.querySelector('.social__comment-total-count');
+const commentShownCount = commentCount.querySelector('.social__comment-shown-count');
 const commentsLoader = bigPictureSocial.querySelector('.comments-loader');
+
+const COUNT_STEP = 5;
+let currentCount = 0;
 
 const onCloseButtonClick = () => closeBigImage();
 
@@ -24,10 +27,15 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
+// Клик по кнопке загрузить ещё
+const onCommentsLoaderClick = () => renderNextComments();
+
 // Создаёт комментарии
 const renderComments = (comments) => {
   socialComments.innerHTML = '';
-  comments.forEach((comment) => {
+  const renderedComments = comments.slice(currentCount, currentCount + COUNT_STEP);
+
+  renderedComments.forEach((comment) => {
     const newComment = socialComment.cloneNode(true);
     const userAvatar = newComment.querySelector('.social__picture');
 
@@ -37,7 +45,22 @@ const renderComments = (comments) => {
 
     socialComments.appendChild(newComment);
   });
+  renderNextComments();
 };
+
+function renderNextComments() {
+  const nextComments = currentCount + COUNT_STEP;
+  commentShownCount.textContent = `${nextComments}`;
+
+  if (commentTotalCount.textContent < 5 || nextComments > commentTotalCount.textContent) {
+    commentShownCount.textContent = commentTotalCount.textContent;
+  }
+
+  if (nextComments >= commentTotalCount.textContent) {
+    commentsLoader.classList.add('hidden');
+  }
+  currentCount += COUNT_STEP;
+}
 
 // Открывает большое фото
 const openBigImage = (miniatureData) => {
@@ -51,15 +74,16 @@ const openBigImage = (miniatureData) => {
   document.body.classList.add('modal-open');
   closeButton.addEventListener('click', onCloseButtonClick);
   document.addEventListener('keydown', onDocumentKeydown);
-  commentCount.classList.add('hidden');
-  commentsLoader.classList.add('hidden');
+  commentsLoader.addEventListener('click', onCommentsLoaderClick);
 
   renderComments(miniatureData.comments);
 };
 
 // Закрывает большое фото
 function closeBigImage() {
-
+  currentCount = 0;
+  commentsLoader.classList.remove('hidden');
+  commentsLoader.removeEventListener('click', onCommentsLoaderClick);
   fullSizeImage.classList.add('hidden');
   document.body.classList.remove('modal-open');
   closeButton.removeEventListener('click', onCloseButtonClick);
