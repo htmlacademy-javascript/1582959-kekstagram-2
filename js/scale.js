@@ -29,7 +29,7 @@ scaleControlSmaller.addEventListener('click', onScaleControlSmallerClick);
 scaleControlBigger.addEventListener('click', onScaleControlBiggerClick);
 
 const resetImagePreviewScale = () => {
-  imagePreview.style.transform = 'scale(1)';
+  setScale(MAX_SCALE);
 };
 
 export { resetImagePreviewScale };
