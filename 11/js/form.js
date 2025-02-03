@@ -1,17 +1,18 @@
 import { isEscapeKey } from './util.js';
+import { resetImagePreviewScale } from './scale.js';
 
-const COMMENT_MAXLENGTH = 14;
+const COMMENT_MAXLENGTH = 140;
 const HASHTAGS_MAXQUANTITY = 5;
-const HASHTAG_MAXLENGTH = 20;
-const VALID_HASHTAG_SYMBOLS = /^#[a-zа-я0-9]+$/i;
+const VALID_HASHTAG_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 
 const errorHashtagMessages = {
-  commentMaxLengthError: `Максимальная длина комментария ${COMMENT_MAXLENGTH} символов`,
-  hashtagMaxLengthError: `Максимальная длина хэштега ${HASHTAG_MAXLENGTH} символов`,
-  hashtagCountError: `Нельзя указать больше ${HASHTAGS_MAXQUANTITY} хэштегов`,
-  invalidHashtagString: 'Хэштег должен начинаться с #, состоять из букв и чисел без пробелов и не может состоять только из одной решётки',
-  uniquenessError: 'Хэштеги не должны повторяться'
+  commentMaxLengthError: `Длина комментария больше ${COMMENT_MAXLENGTH} символов`,
+  hashtagCountError: 'Превышено количество хэштегов',
+  invalidHashtagString: 'Введён невалидный хэштег',
+  uniquenessError: 'Хэштеги повторяются'
 };
+
+let pristine = '';
 
 const form = document.querySelector('.img-upload__form');
 const imageLoader = form.querySelector('.img-upload__input');
@@ -25,31 +26,31 @@ function validateComment(value) {
   return value.length <= COMMENT_MAXLENGTH;
 }
 
-// Валидация хештегов
+// Валидация хэштегов
 const getHashtags = (value) => value.toLowerCase().split(' ').filter(Boolean);
 
 const validateHashtagSymbols = (value) => getHashtags(value).every((hashtag) => VALID_HASHTAG_SYMBOLS.test(hashtag));
 
 const validateHashtagCount = (value) => getHashtags(value).length <= HASHTAGS_MAXQUANTITY;
 
-const validateHashtagLength = (value) => !value || getHashtags(value).every((hashtag) => hashtag.length <= HASHTAG_MAXLENGTH);
-
 const validateHashtagUniqueness = (value) => {
   const tags = getHashtags(value);
   return tags.length === new Set(tags).size;
 };
 
-const pristine = new Pristine(form, {
-  classTo: 'img-upload__field-wrapper',
-  errorTextParent: 'img-upload__field-wrapper',
-  errorTextClass: 'img-upload__field-wrapper--error'
-}, false);
+const addValidators = () => {
 
-pristine.addValidator(commentTextarea, validateComment, errorHashtagMessages.commentMaxLengthError);
-pristine.addValidator(hashtagInput, validateHashtagLength, errorHashtagMessages.hashtagMaxLengthError);
-pristine.addValidator(hashtagInput, validateHashtagSymbols, errorHashtagMessages.invalidHashtagString);
-pristine.addValidator(hashtagInput, validateHashtagCount, errorHashtagMessages.hashtagCountError);
-pristine.addValidator(hashtagInput, validateHashtagUniqueness, errorHashtagMessages.uniquenessError);
+  pristine = new Pristine(form, {
+    classTo: 'img-upload__field-wrapper',
+    errorTextParent: 'img-upload__field-wrapper',
+    errorTextClass: 'img-upload__field-wrapper--error'
+  }, false);
+
+  pristine.addValidator(commentTextarea, validateComment, errorHashtagMessages.commentMaxLengthError);
+  pristine.addValidator(hashtagInput, validateHashtagSymbols, errorHashtagMessages.invalidHashtagString);
+  pristine.addValidator(hashtagInput, validateHashtagCount, errorHashtagMessages.hashtagCountError);
+  pristine.addValidator(hashtagInput, validateHashtagUniqueness, errorHashtagMessages.uniquenessError);
+};
 
 const onFormSubmit = (evt) => {
   evt.preventDefault();
@@ -81,7 +82,10 @@ const showEditForm = () => {
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
-const onImageLoaderChange = () => showEditForm();
+const onImageLoaderChange = () => {
+  addValidators();
+  showEditForm();
+};
 
 imageLoader.addEventListener('change', onImageLoaderChange);
 
@@ -89,6 +93,7 @@ imageLoader.addEventListener('change', onImageLoaderChange);
 function closeEditForm() {
   form.reset();
   pristine.reset();
+  resetImagePreviewScale();
   overlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
