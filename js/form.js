@@ -1,9 +1,10 @@
 import { isEscapeKey } from './util.js';
+import { resetImagePreviewScale } from './scale.js';
 
-const COMMENT_MAXLENGTH = 14;
+const COMMENT_MAXLENGTH = 140;
 const HASHTAGS_MAXQUANTITY = 5;
 const HASHTAG_MAXLENGTH = 20;
-const VALID_HASHTAG_SYMBOLS = /^#[a-zа-я0-9]+$/i;
+const VALID_HASHTAG_SYMBOLS = /^#[a-zа-яё0-9]+$/i;
 
 const errorHashtagMessages = {
   commentMaxLengthError: `Максимальная длина комментария ${COMMENT_MAXLENGTH} символов`,
@@ -89,6 +90,7 @@ imageLoader.addEventListener('change', onImageLoaderChange);
 function closeEditForm() {
   form.reset();
   pristine.reset();
+  resetImagePreviewScale();
   overlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
