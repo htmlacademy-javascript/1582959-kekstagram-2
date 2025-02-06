@@ -1,5 +1,6 @@
 import { isEscapeKey } from './util.js';
 import { resetImagePreviewScale } from './scale.js';
+import { resetEffects } from './effects.js';
 
 const COMMENT_MAXLENGTH = 140;
 const HASHTAGS_MAXQUANTITY = 5;
@@ -94,6 +95,7 @@ function closeEditForm() {
   form.reset();
   pristine.reset();
   resetImagePreviewScale();
+  resetEffects();
   overlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
