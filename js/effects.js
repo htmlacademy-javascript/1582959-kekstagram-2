@@ -104,6 +104,14 @@ noUiSlider.create(slider, {
 
 effectLevel.classList.add('hidden');
 
+const useDefaultEffect = () => {
+  imagePreview.className = '';
+  imagePreview.style = '';
+  effectLevelValue.value = '';
+  effectLevel.classList.add('hidden');
+};
+
+
 const updateSlider = (filterName) => {
   slider.noUiSlider.on('update', () => {
     const filter = EFFECTS_DATA[filterName].filter;
@@ -122,7 +130,6 @@ const onEffectsContainerChange = (evt) => {
   effectLevel.classList.add('hidden');
   imagePreview.className = '';
   imagePreview.style.filter = '';
-
   if (targetElement !== INITIAL_EFFECT) {
     effectLevel.classList.remove('hidden');
     imagePreview.classList.add(`effects__preview--${targetElement}`);
@@ -132,10 +139,8 @@ const onEffectsContainerChange = (evt) => {
 };
 
 const resetEffects = () => {
-  effectsContainer.removeEventListener('click', onEffectsContainerChange);
-  imagePreview.style.filter = '';
-  imagePreview.className = '';
-  slider.noUiSlider.updateOptions(INITIAL_EFFECT);
+  effectsContainer.removeEventListener('change', onEffectsContainerChange);
+  useDefaultEffect();
 };
 
 effectsContainer.addEventListener('change', onEffectsContainerChange);
