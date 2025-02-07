@@ -116,6 +116,7 @@ const updateSlider = (filterName) => {
   slider.noUiSlider.on('update', () => {
     const filter = EFFECTS_DATA[filterName].filter;
     const unit = EFFECTS_DATA[filterName].unit;
+    imagePreview.style.filter = '';
 
     if (filterName !== INITIAL_EFFECT) {
       const value = slider.noUiSlider.get();
@@ -130,6 +131,7 @@ const onEffectsContainerChange = (evt) => {
   effectLevel.classList.add('hidden');
   imagePreview.className = '';
   imagePreview.style.filter = '';
+  effectLevelValue.value = '';
   if (targetElement !== INITIAL_EFFECT) {
     effectLevel.classList.remove('hidden');
     imagePreview.classList.add(`effects__preview--${targetElement}`);
