@@ -81,6 +81,20 @@ const EFFECTS_DATA = {
       step: 0.1,
     },
     unit: ''
+  },
+  default:
+  {
+    range: {
+      min: 0,
+      max: 100
+    },
+    start: 100,
+    step: 1,
+    format: {
+      to: (value) => Number.isInteger(value) ? value.toFixed(0) : value.toFixed(1),
+      from: (value) => parseFloat(value)
+    },
+    connect: 'lower'
   }
 };
 
@@ -92,23 +106,19 @@ const effectsContainer = document.querySelector('.effects__list');
 
 const INITIAL_EFFECT = EFFECTS_DATA.none;
 
-noUiSlider.create(slider, {
-  range: {
-    min: 0,
-    max: 100
-  },
-  start: 100,
-  step: 1,
-  connect: 'lower'
-});
+noUiSlider.create(slider, EFFECTS_DATA.default);
 
+const hideSlider = () => {
 effectLevel.classList.add('hidden');
+};
+
+hideSlider();
 
 const useDefaultEffect = () => {
   imagePreview.className = '';
   imagePreview.style = '';
   effectLevelValue.value = '';
-  effectLevel.classList.add('hidden');
+  hideSlider();
 };
 
 
