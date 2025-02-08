@@ -109,7 +109,7 @@ const INITIAL_EFFECT = EFFECTS_DATA.none;
 noUiSlider.create(slider, EFFECTS_DATA.default);
 
 const hideSlider = () => {
-effectLevel.classList.add('hidden');
+  effectLevel.classList.add('hidden');
 };
 
 hideSlider();
