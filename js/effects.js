@@ -128,10 +128,7 @@ const updateSlider = (filterName) => {
 
 const onEffectsContainerChange = (evt) => {
   const targetElement = evt.target.value;
-  effectLevel.classList.add('hidden');
-  imagePreview.className = '';
-  imagePreview.style.filter = '';
-  effectLevelValue.value = '';
+  useDefaultEffect();
   if (targetElement !== INITIAL_EFFECT) {
     effectLevel.classList.remove('hidden');
     imagePreview.classList.add(`effects__preview--${targetElement}`);
@@ -145,6 +142,8 @@ const resetEffects = () => {
   useDefaultEffect();
 };
 
-effectsContainer.addEventListener('change', onEffectsContainerChange);
+const addEffects = () => {
+  effectsContainer.addEventListener('change', onEffectsContainerChange);
+};
 
-export { resetEffects };
+export { addEffects, resetEffects };

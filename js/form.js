@@ -1,6 +1,6 @@
 import { isEscapeKey } from './util.js';
 import { resetImagePreviewScale } from './scale.js';
-import { resetEffects } from './effects.js';
+import { addEffects, resetEffects } from './effects.js';
 
 const COMMENT_MAXLENGTH = 140;
 const HASHTAGS_MAXQUANTITY = 5;
@@ -84,6 +84,7 @@ const showEditForm = () => {
 };
 
 const onImageLoaderChange = () => {
+  addEffects();
   addValidators();
   showEditForm();
 };
