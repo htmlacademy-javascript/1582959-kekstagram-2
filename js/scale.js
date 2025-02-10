@@ -25,11 +25,13 @@ const onScaleControlBiggerClick = () => {
   setScale(currentValue + SCALE_CONTROL_STEP);
 };
 
-scaleControlSmaller.addEventListener('click', onScaleControlSmallerClick);
-scaleControlBigger.addEventListener('click', onScaleControlBiggerClick);
+const initScale = () => {
+  scaleControlSmaller.addEventListener('click', onScaleControlSmallerClick);
+  scaleControlBigger.addEventListener('click', onScaleControlBiggerClick);
+};
 
 const resetImagePreviewScale = () => {
   setScale(MAX_SCALE);
 };
 
-export { resetImagePreviewScale };
+export { initScale, resetImagePreviewScale };
