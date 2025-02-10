@@ -5,7 +5,7 @@ const MAX_SCALE = 100;
 const scaleControlSmaller = document.querySelector('.scale__control--smaller');
 const scaleControlBigger = document.querySelector('.scale__control--bigger');
 const scaleControlValue = document.querySelector('.scale__control--value');
-const imagePreview = document.querySelector('.img-upload__preview');
+const imagePreview = document.querySelector('.img-upload__preview img');
 
 // Функция для установки нового значения масштаба
 function setScale(newValue) {
@@ -25,11 +25,13 @@ const onScaleControlBiggerClick = () => {
   setScale(currentValue + SCALE_CONTROL_STEP);
 };
 
-scaleControlSmaller.addEventListener('click', onScaleControlSmallerClick);
-scaleControlBigger.addEventListener('click', onScaleControlBiggerClick);
+const initScale = () => {
+  scaleControlSmaller.addEventListener('click', onScaleControlSmallerClick);
+  scaleControlBigger.addEventListener('click', onScaleControlBiggerClick);
+};
 
 const resetImagePreviewScale = () => {
   setScale(MAX_SCALE);
 };
 
-export { resetImagePreviewScale };
+export { initScale, resetImagePreviewScale };
