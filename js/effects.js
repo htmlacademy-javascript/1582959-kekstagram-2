@@ -1,3 +1,5 @@
+import { resetImagePreviewScale } from './scale.js';
+
 const INITIAL_EFFECT = 'none';
 
 const effectsData = {
@@ -94,7 +96,7 @@ const effectsData = {
     start: 100,
     step: 1,
     format: {
-      to: (value) => Number.isInteger(value) ? value.toFixed(0) : value.toFixed(1),
+      to: (value) => Number(value),
       from: (value) => parseFloat(value)
     },
     connect: 'lower'
@@ -140,6 +142,7 @@ const updateSlider = (filterName) => {
 const onEffectsContainerChange = (evt) => {
   const targetElement = evt.target.value;
   useDefaultEffect();
+  resetImagePreviewScale();
   if (targetElement !== INITIAL_EFFECT) {
     effectLevel.classList.remove('hidden');
     imagePreview.classList.add(`effects__preview--${targetElement}`);
