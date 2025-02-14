@@ -1,6 +1,8 @@
 import { isEscapeKey } from './util.js';
 import { initScale, resetImagePreviewScale } from './scale.js';
 import { addEffects, resetEffects } from './effects.js';
+import { addErrorMessage, addSuccessMessage } from './form-messages.js';
+import { sendData } from './api.js';
 
 const COMMENT_MAXLENGTH = 140;
 const HASHTAGS_MAXQUANTITY = 5;
@@ -13,6 +15,11 @@ const errorHashtagMessages = {
   uniquenessError: 'Хэштеги повторяются'
 };
 
+const SubmitButtonText = {
+  DEFAULT: 'Опубликовать',
+  SENDING: 'Публикую...'
+};
+
 let pristine = '';
 
 const form = document.querySelector('.img-upload__form');
@@ -21,6 +28,7 @@ const overlay = form.querySelector('.img-upload__overlay');
 const closeLoader = form.querySelector('.img-upload__cancel');
 const commentTextarea = overlay.querySelector('.text__description');
 const hashtagInput = overlay.querySelector('.text__hashtags');
+const submitButton = overlay.querySelector('.img-upload__submit');
 
 // Валидация комментариев
 function validateComment(value) {
@@ -53,9 +61,31 @@ const addValidators = () => {
   pristine.addValidator(hashtagInput, validateHashtagUniqueness, errorHashtagMessages.uniquenessError);
 };
 
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.DEFAULT;
+};
+
 const onFormSubmit = (evt) => {
   evt.preventDefault();
-  pristine.validate();
+  const formData = new FormData(form);
+  if (pristine.validate()) {
+    blockSubmitButton();
+    sendData(formData)
+      .then(() => {
+        addSuccessMessage();
+        closeEditForm();
+      })
+      .catch(() => {
+        addErrorMessage();
+      })
+      .finally(unblockSubmitButton);
+  }
 };
 
 form.addEventListener('submit', onFormSubmit);

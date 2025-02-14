@@ -1,24 +1,19 @@
-import { createPhotos } from './data.js';
 import { openBigImage } from './full-size-image.js';
 
 const picturesContainer = document.querySelector('.pictures');
 const templatePicture = document.querySelector('#picture').content.querySelector('.picture');
 
-const similarPhotos = createPhotos();
-
-const onPictureClick = (evt) => {
-  evt.preventDefault();
-  const id = evt.currentTarget.dataset.id;
-  const miniatureData = similarPhotos.find((photo) => photo.id.toString() === id);
-  if (miniatureData) {
-    openBigImage(miniatureData);
-  }
-};
-
-const renderMiniatures = () => {
+const renderMiniatures = (similarPhotos) => {
   const photoFragment = document.createDocumentFragment();
 
   similarPhotos.forEach(({ url, description, likes, comments, id }) => {
+    const onPictureClick = (evt) => {
+      evt.preventDefault();
+      const miniatureData = similarPhotos.find((photo) => photo.id.toString() === evt.currentTarget.dataset.id);
+      if (miniatureData) {
+        openBigImage(miniatureData);
+      }
+    };
     const picture = templatePicture.cloneNode(true);
     const pictureImage = picture.querySelector('.picture__img');
     pictureImage.src = url;
