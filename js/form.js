@@ -3,6 +3,7 @@ import { initScale, resetImagePreviewScale } from './scale.js';
 import { addEffects, resetEffects } from './effects.js';
 import { addErrorMessage, addSuccessMessage } from './form-messages.js';
 import { sendData } from './api.js';
+import { uploadFile } from './upload-photo.js';
 
 const COMMENT_MAXLENGTH = 140;
 const HASHTAGS_MAXQUANTITY = 5;
@@ -118,6 +119,7 @@ const onImageLoaderChange = () => {
   initScale();
   addValidators();
   showEditForm();
+  uploadFile(imageLoader);
 };
 
 imageLoader.addEventListener('change', onImageLoaderChange);

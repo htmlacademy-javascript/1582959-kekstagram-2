@@ -1,3 +1,5 @@
+import { imagePreview } from './effects.js';
+
 const SCALE_CONTROL_STEP = 25;
 const MIN_SCALE = 25;
 const MAX_SCALE = 100;
@@ -5,7 +7,6 @@ const MAX_SCALE = 100;
 const scaleControlSmaller = document.querySelector('.scale__control--smaller');
 const scaleControlBigger = document.querySelector('.scale__control--bigger');
 const scaleControlValue = document.querySelector('.scale__control--value');
-const imagePreview = document.querySelector('.img-upload__preview img');
 
 // Функция для установки нового значения масштаба
 function setScale(newValue) {

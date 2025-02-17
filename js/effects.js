@@ -160,4 +160,4 @@ const addEffects = () => {
   effectsContainer.addEventListener('change', onEffectsContainerChange);
 };
 
-export { addEffects, resetEffects };
+export { addEffects, resetEffects, imagePreview };
