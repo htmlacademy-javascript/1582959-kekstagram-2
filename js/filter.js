@@ -4,6 +4,12 @@ import { debounce, shuffleArray } from './util.js';
 const MAX_SHUFFLED_PHOTOS = 10;
 const TIMEOUT_DELAY = 500;
 
+const Filter = {
+  DEFAULT: 'filter-default',
+  RANDOM: 'filter-random',
+  DISCUSSED: 'filter-discussed',
+};
+
 const filterBlock = document.querySelector('.img-filters');
 
 const sortByComments = (firstImage, secondImage) => secondImage.comments.length - firstImage.comments.length;
@@ -15,10 +21,10 @@ let currentButton = filterBlock.querySelector('#filter-default');
 
 const getSortedData = (data) => {
   clearPhotos();
-  if (currentButton.id === 'filter-random') {
+  if (currentButton.id === Filter.RANDOM) {
     return shuffleArray(data.slice()).slice(0, MAX_SHUFFLED_PHOTOS);
   }
-  if (currentButton.id === 'filter-discussed') {
+  if (currentButton.id === Filter.DISCUSSED) {
     return data.slice().sort(sortByComments);
   }
   return data;
