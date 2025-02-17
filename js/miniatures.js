@@ -27,4 +27,9 @@ const renderMiniatures = (similarPhotos) => {
   picturesContainer.append(photoFragment);
 };
 
-export { renderMiniatures };
+const clearPhotos = () => {
+  const picturesToRemove = document.querySelectorAll('.picture');
+  picturesToRemove.forEach((element) => element.remove());
+};
+
+export { renderMiniatures, clearPhotos };
