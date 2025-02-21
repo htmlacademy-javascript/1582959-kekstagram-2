@@ -1,8 +1,6 @@
-import { resetImagePreviewScale } from './scale.js';
-
 const INITIAL_EFFECT = 'none';
 
-const effectsData = {
+const EffectsData = {
   chrome:
   {
     filter: 'grayscale',
@@ -109,7 +107,7 @@ const slider = effectLevel.querySelector('.effect-level__slider');
 const imagePreview = document.querySelector('.img-upload__preview img');
 const effectsContainer = document.querySelector('.effects__list');
 
-noUiSlider.create(slider, effectsData.default);
+noUiSlider.create(slider, EffectsData.default);
 
 const hideSlider = () => {
   effectLevel.classList.add('hidden');
@@ -119,7 +117,7 @@ hideSlider();
 
 const useDefaultEffect = () => {
   imagePreview.className = '';
-  imagePreview.style = '';
+  imagePreview.style.filter = '';
   effectLevelValue.value = '';
   hideSlider();
 };
@@ -127,8 +125,8 @@ const useDefaultEffect = () => {
 
 const updateSlider = (filterName) => {
   slider.noUiSlider.on('update', () => {
-    const filter = effectsData[filterName].filter;
-    const unit = effectsData[filterName].unit;
+    const filter = EffectsData[filterName].filter;
+    const unit = EffectsData[filterName].unit;
     imagePreview.style.filter = '';
 
     if (filterName !== INITIAL_EFFECT) {
@@ -142,11 +140,10 @@ const updateSlider = (filterName) => {
 const onEffectsContainerChange = (evt) => {
   const targetElement = evt.target.value;
   useDefaultEffect();
-  resetImagePreviewScale();
   if (targetElement !== INITIAL_EFFECT) {
     effectLevel.classList.remove('hidden');
     imagePreview.classList.add(`effects__preview--${targetElement}`);
-    slider.noUiSlider.updateOptions(effectsData[targetElement].values);
+    slider.noUiSlider.updateOptions(EffectsData[targetElement].values);
     updateSlider(targetElement);
   }
 };
