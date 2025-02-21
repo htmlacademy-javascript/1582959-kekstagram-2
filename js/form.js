@@ -9,7 +9,7 @@ const COMMENT_MAXLENGTH = 140;
 const HASHTAGS_MAXQUANTITY = 5;
 const VALID_HASHTAG_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 
-const errorHashtagMessages = {
+const ErrorHashtagMessages = {
   commentMaxLengthError: `Длина комментария больше ${COMMENT_MAXLENGTH} символов`,
   hashtagCountError: 'Превышено количество хэштегов',
   invalidHashtagString: 'Введён невалидный хэштег',
@@ -32,9 +32,7 @@ const hashtagInput = overlay.querySelector('.text__hashtags');
 const submitButton = overlay.querySelector('.img-upload__submit');
 
 // Валидация комментариев
-function validateComment(value) {
-  return value.length <= COMMENT_MAXLENGTH;
-}
+const validateComment = (value) => value.length <= COMMENT_MAXLENGTH;
 
 // Валидация хэштегов
 const getHashtags = (value) => value.toLowerCase().split(' ').filter(Boolean);
@@ -56,10 +54,10 @@ const addValidators = () => {
     errorTextClass: 'img-upload__field-wrapper--error'
   }, false);
 
-  pristine.addValidator(commentTextarea, validateComment, errorHashtagMessages.commentMaxLengthError);
-  pristine.addValidator(hashtagInput, validateHashtagSymbols, errorHashtagMessages.invalidHashtagString);
-  pristine.addValidator(hashtagInput, validateHashtagCount, errorHashtagMessages.hashtagCountError);
-  pristine.addValidator(hashtagInput, validateHashtagUniqueness, errorHashtagMessages.uniquenessError);
+  pristine.addValidator(commentTextarea, validateComment, ErrorHashtagMessages.commentMaxLengthError);
+  pristine.addValidator(hashtagInput, validateHashtagSymbols, ErrorHashtagMessages.invalidHashtagString);
+  pristine.addValidator(hashtagInput, validateHashtagCount, ErrorHashtagMessages.hashtagCountError);
+  pristine.addValidator(hashtagInput, validateHashtagUniqueness, ErrorHashtagMessages.uniquenessError);
 };
 
 const blockSubmitButton = () => {
@@ -94,7 +92,8 @@ form.addEventListener('submit', onFormSubmit);
 // Закрытие по esc
 const onDocumentKeydown = (evt) => {
   const keyCode = evt.keyCode;
-  if (isEscapeKey(keyCode)) {
+  const errorMessage = document.querySelector('.error');
+  if (isEscapeKey(keyCode) && !errorMessage) {
     evt.preventDefault();
     if (document.activeElement === hashtagInput || document.activeElement === commentTextarea) {
       evt.stopPropagation();

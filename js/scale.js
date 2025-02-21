@@ -9,12 +9,12 @@ const scaleControlBigger = document.querySelector('.scale__control--bigger');
 const scaleControlValue = document.querySelector('.scale__control--value');
 
 // Функция для установки нового значения масштаба
-function setScale(newValue) {
+const setScale = (newValue) => {
   if (newValue >= MIN_SCALE && newValue <= MAX_SCALE) {
     scaleControlValue.value = `${newValue}%`;
     imagePreview.style.transform = `scale(${newValue / 100})`;
   }
-}
+};
 
 const onScaleControlSmallerClick = () => {
   const currentValue = parseInt(scaleControlValue.value, 10);

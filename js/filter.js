@@ -20,7 +20,7 @@ let currentButton = filterBlock.querySelector('#filter-default');
 
 
 const getSortedData = (data) => {
-  clearPhotos();
+
   if (currentButton.id === Filter.RANDOM) {
     return shuffleArray(data.slice()).slice(0, MAX_SHUFFLED_PHOTOS);
   }
@@ -31,21 +31,25 @@ const getSortedData = (data) => {
 };
 
 const setFilterButtonClick = (cb) => {
-  filterBlock.addEventListener('click', debounce((evt) => {
-    const target = evt.target;
-    if (!target.matches('.img-filters__button') || target.matches('.img-filters__button--active:not(#filter-random)')) {
+  const onFilterBlockClick = debounce((evt) => {
+    const target = evt.target.closest('.img-filters__button');
+    if (!target || target === currentButton) {
       return;
     }
-    currentButton.classList.remove('img-filters__button--active');
+    if (currentButton) {
+      currentButton.classList.remove('img-filters__button--active');
+    }
     currentButton = target;
     currentButton.classList.add('img-filters__button--active');
-    renderMiniatures(cb());
-  }, TIMEOUT_DELAY));
+    clearPhotos();
+    renderMiniatures(getSortedData(cb()));
+  }, TIMEOUT_DELAY);
+  filterBlock.addEventListener('click', onFilterBlockClick);
 };
 
 const addSorting = (photos) => {
   showFilterBlock();
-  setFilterButtonClick(() => getSortedData(photos));
+  setFilterButtonClick(() => photos);
 };
 
 export { addSorting };

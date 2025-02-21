@@ -1,23 +1,6 @@
-const keyboardButtons = {
+const KeyboardButtons = {
   ESCAPE: 27,
 };
-
-const getRandomInteger = (min, max) => {
-  const lower = Math.ceil(Math.min(min, max));
-  const upper = Math.floor(Math.max(min, max));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-};
-
-function createId(min, max) {
-  let currentValue = min - 1;
-  return function addValue() {
-    if (currentValue <= max) {
-      currentValue++;
-    }
-    return currentValue;
-  };
-}
 
 const shuffleArray = (array) => {
   for (let i = array.length - 1; i > 0; i--) {
@@ -35,6 +18,6 @@ const debounce = (callback, timeoutDelay) => {
   };
 };
 
-const isEscapeKey = (keyCode) => keyCode === keyboardButtons.ESCAPE;
+const isEscapeKey = (keyCode) => keyCode === KeyboardButtons.ESCAPE;
 
-export { getRandomInteger, createId, isEscapeKey, debounce, shuffleArray };
+export { isEscapeKey, debounce, shuffleArray };
