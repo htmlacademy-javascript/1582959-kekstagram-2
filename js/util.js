@@ -2,12 +2,12 @@ const KeyboardButtons = {
   ESCAPE: 27,
 };
 
-const shuffleArray = (array) => {
-  for (let i = array.length - 1; i > 0; i--) {
+const shuffleArray = (photos) => {
+  for (let i = photos.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
+    [photos[i], photos[j]] = [photos[j], photos[i]];
   }
-  return array;
+  return photos;
 };
 
 const debounce = (callback, timeoutDelay) => {
