@@ -13,6 +13,8 @@ const bigPictureSocial = fullSizeImage.querySelector('.big-picture__social');
 const socialComments = bigPictureSocial.querySelector('.social__comments');
 const socialComment = socialComments.querySelector('.social__comment');
 const commentCount = bigPictureSocial.querySelector('.social__comment-count');
+const commentShownCount = commentCount.querySelector('.social__comment-shown-count');
+const commentTotalCount = commentCount.querySelector('.social__comment-total-count');
 const commentsLoader = bigPictureSocial.querySelector('.comments-loader');
 
 const onCloseButtonClick = () => closeBigImage();
@@ -46,7 +48,8 @@ const renderComments = (comments) => {
 // Отрисовывает порцию коментариев
 const renderNextComments = () => {
   const endIndex = Math.min(startIndex + COMMENTS_COUNT_STEP, currentComments.length);
-  commentCount.textContent = `${endIndex} из ${currentComments.length} комментариев`;
+  commentShownCount.textContent = `${endIndex}`;
+  commentTotalCount.textContent = `${currentComments.length}`;
 
   const newComments = currentComments.slice(startIndex, endIndex);
   const commentsPortion = renderComments(newComments);

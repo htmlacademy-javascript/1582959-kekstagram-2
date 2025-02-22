@@ -30,8 +30,13 @@ const getSortedData = (data) => {
   return data;
 };
 
-const setFilterButtonClick = (cb) => {
-  const onFilterBlockClick = debounce((evt) => {
+const debouncedRenderPhotos = debounce((cb) => {
+  clearPhotos();
+  renderMiniatures(getSortedData(cb()));
+}, TIMEOUT_DELAY);
+
+const setFilterButtonClick = (photos) => {
+  const onFilterBlockClick = (evt) => {
     const target = evt.target.closest('.img-filters__button');
     if (!target || target === currentButton) {
       return;
@@ -41,9 +46,8 @@ const setFilterButtonClick = (cb) => {
     }
     currentButton = target;
     currentButton.classList.add('img-filters__button--active');
-    clearPhotos();
-    renderMiniatures(getSortedData(cb()));
-  }, TIMEOUT_DELAY);
+    debouncedRenderPhotos(photos);
+  };
   filterBlock.addEventListener('click', onFilterBlockClick);
 };
 
